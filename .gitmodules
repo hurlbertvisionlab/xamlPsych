@@ -1,0 +1,6 @@
+[submodule "XamlPsychHost/submodules/ledmotive-library-dotnet"]
+	path = XamlPsychHost/submodules/ledmotive-library-dotnet
+	url = https://github.com/hurlbertvisionlab/ledmotive-library-dotnet
+[submodule "XamlPsychHost/submodules/UAM.Optics.ColorScience"]
+	path = XamlPsychHost/submodules/UAM.Optics.ColorScience
+	url = https://github.com/hurlbertvisionlab/UAM.Optics.ColorScience.git
