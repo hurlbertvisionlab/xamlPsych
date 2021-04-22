@@ -72,8 +72,12 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework" />	  
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HurlbertVisionLab.LightHub" Version="1.0.0" />
+    <PackageReference Include="UAM.Optics.ColorScience" Version="1.0.0" />
+   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -106,36 +110,6 @@
     <Compile Include="StudyObjects\StudySteps\Iterators\StudyIterator.cs" />
     <Compile Include="StudyObjects\StudySteps\UI\InteractiveDiagonalTransform.cs" />
     <Compile Include="Converters\UnsafeSingleConverter.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.ColorimeterData.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.DeviceInfo.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.LuminaireInfo.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.PcbTemperature.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.Sensor.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.SpectrometerSpectrum.cs" />
-    <Compile Include="submodules\ledmotive-library-dotnet\HurlbertVisionLab.LightHub\LightHub.WavelengthRange.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\ColorMatchingFunctions.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Chromaticity1931xy.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Chromaticity1960uv.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Chromaticity1976uv.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Color1931xyY.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Color1931XYZ.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Color1976Lab.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Color1976LCh.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\Color1976Luv.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\ColorDKL.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\ColorHSV.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\ColorLMS.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\ColorRGB.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Colors\ColorSpectrum.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\ColorTransformMatrix.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\ConvertColor.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Illuminants\Illuminant1931XYZ.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Not Standard\ColorsNS.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Not Standard\ConvertColorNS.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Primaries\RGBPrimaries.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Primaries\RGBPrimaries1931xyY.cs" />
-    <Compile Include="submodules\UAM.Optics.ColorScience\Primaries\RGBPrimaries1976uv.cs" />
     <Compile Include="UAM\Barycentric.cs" />
     <Compile Include="UAM\PowerManagement.cs" />
     <Compile Include="StudyException.cs" />
