@@ -24,6 +24,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         public Dictionary<string, object> Store { get; } = new Dictionary<string, object>();
         public Dictionary<string, object> ItemContexts { get; } = new Dictionary<string, object>();
 
+        public DateTimeOffset? Started { get; private set; }
         public StudyStepContext CurrentStep => _currentSteps?.Count > 0 ? _currentSteps.Peek() : null;
         public int StepNumber => _pastSteps.Count + _currentSteps.Count;
 
@@ -160,6 +161,8 @@ namespace HurlbertVisionLab.XamlPsychHost
 
         public async Task Execute(StudyStep step, object itemContext, CancellationToken cancellationToken)
         {
+            Started ??= DateTimeOffset.Now;
+
             Log(step, this, "Execute", step.GetType().Name, step.ID, itemContext);
 
             StudyStepContext context = new StudyStepContext(step, _pastSteps.Count);
