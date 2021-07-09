@@ -140,7 +140,7 @@
         </DataTemplate>
 
         <Style TargetType="{x:Type psych:SelectionBox}">
-            <Setter Property="ItemsSource" Value="{Binding ItemContext}" />
+            <!--<Setter Property="ItemsSource" Value="{Binding ItemContext}" />-->
             <Setter Property="SelectedItem" Value="{Binding Step.Result, Mode=OneWayToSource}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
@@ -204,6 +204,10 @@
                     <ContentPresenter Content="{Binding InnerException}" Margin="0.5cm,0,0,0" />
                 </StackPanel>
             </ScrollViewer>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type system:Exception}">
+            <TextBlock Text="{Binding}" TextWrapping="Wrap" />
         </DataTemplate>
 
     </Application.Resources>
