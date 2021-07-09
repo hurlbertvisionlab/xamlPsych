@@ -224,19 +224,19 @@ namespace HurlbertVisionLab.XamlPsychHost
         protected virtual void FinalizeExecution(Task advancingTask)
         {
             if (advancingTask == _timeoutTaskSource.Task)
-                StudyContext.Log(this, this, "Advancing", "TimeOut", _timeoutTaskSource.Task.Result);
+                LogAdvancing("TimeOut", _timeoutTaskSource.Task.Result);
 
             else if (advancingTask == _inputTaskSource.Task)
-                StudyContext.Log(this, this, "Advancing", "StudyInput", _inputTaskSource.Task.Result);
+                LogAdvancing("StudyInput", _inputTaskSource.Task.Result);
 
             else if (advancingTask == _resultTaskSource.Task)
-                StudyContext.Log(this, this, "Advancing", "Result", _resultTaskSource.Task.Result);
+                LogAdvancing("Result", _resultTaskSource.Task.Result);
 
             else if (advancingTask == _explicitTaskSource.Task)
-                StudyContext.Log(this, this, "Advancing", "Explicit", _explicitTaskSource.Task.Result);
+                LogAdvancing("Explicit", _explicitTaskSource.Task.Result);
 
             else
-                StudyContext.Log(this, this, "Advancing", "Done");
+                LogAdvancing("Done", null);
 
             if (Result != null)
             {
@@ -257,6 +257,11 @@ namespace HurlbertVisionLab.XamlPsychHost
                 StudyContext.Store[StoreResultAs] = Result;
             }
         }
+        private void LogAdvancing(string reason, object taskResult)
+        {
+            StudyContext.Log(this, this, "Advancing", reason, taskResult);
+            StudyContext.Store["LastAdvance"] = reason;
+        }
 
         public virtual void OnStudyInput(object sender, StudyInputEventArgs args)
         {
@@ -272,7 +277,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             _timeoutCancellation.Cancel();
         }
 
-        protected void Advance(string reason)
+        public void Advance(string reason)
         {
             _explicitTaskSource.SetResult(reason);
         }
