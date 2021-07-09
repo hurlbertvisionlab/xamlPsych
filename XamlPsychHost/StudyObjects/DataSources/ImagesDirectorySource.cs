@@ -66,12 +66,18 @@ namespace HurlbertVisionLab.XamlPsychHost
             }
 
             foreach (string file in files)
-                yield return new ImageItem
-                {
-                    Source = file,
-                    Name = Path.GetFileName(file),
-                    Image = new BitmapImage(new Uri(file, UriKind.RelativeOrAbsolute)),
-                };
+                if (GetImageItem(file) is ImageItem image)
+                    yield return image;
+        }
+
+        public virtual ImageItem GetImageItem(string file)
+        {
+            return new ImageItem
+            {
+                Source = file,
+                Name = Path.GetFileName(file),
+                Image = new BitmapImage(new Uri(file, UriKind.RelativeOrAbsolute)),
+            };
         }
 
         public override int? GetItemsCount(StudyContext context)
@@ -80,4 +86,21 @@ namespace HurlbertVisionLab.XamlPsychHost
         }
     }
 
+    public class LibRawDirectorySource : ImagesDirectorySource
+    {
+        public override ImageItem GetImageItem(string file)
+        {
+            LibRawWrapper.LibRawBitmapDecoder raw = new LibRawWrapper.LibRawBitmapDecoder(new Uri(file), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.None);
+            
+            System.Diagnostics.Debug.WriteLine("### LIBRAW DECODING");
+            BitmapSource bitmap = raw.Frames[0];
+
+            return new ImageItem
+            {
+                Source = file,
+                Name = Path.GetFileName(file),
+                Image = bitmap
+            };
+        }
+    }
 }
