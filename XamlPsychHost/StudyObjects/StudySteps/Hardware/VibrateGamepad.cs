@@ -47,7 +47,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             XInput.SetState(0, _vibration);
             if (Duration.Ticks > 0)
             {
-                await Task.Delay(Duration).ConfigureAwait(false);
+                await Task.Delay(Duration);
                 StudyContext.Log(this, this, "SetState", 0, 0);
                 XInput.SetState(0, default);
             }
