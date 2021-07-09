@@ -19,7 +19,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         }
 
 
-        private static Dictionary<string, Key> _inputToKey = new Dictionary<string, Key>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, Key> _inputToKey = new Dictionary<string, Key>(StringComparer.OrdinalIgnoreCase)
         {
             { "Left", Key.Left },
             { "Right", Key.Right },

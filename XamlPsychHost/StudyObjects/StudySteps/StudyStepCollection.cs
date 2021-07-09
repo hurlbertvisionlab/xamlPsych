@@ -7,7 +7,7 @@ namespace HurlbertVisionLab.XamlPsychHost
 {
     public class StudyStepCollection : StudyStep, ICollection<StudyStep>
     {
-        private ICollection<StudyStep> _steps = new List<StudyStep>();
+        private readonly ICollection<StudyStep> _steps = new List<StudyStep>();
 
         public int Count => _steps.Count;
         public bool IsReadOnly => _steps.IsReadOnly;

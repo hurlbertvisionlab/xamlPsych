@@ -9,7 +9,7 @@ namespace HurlbertVisionLab.XamlPsychHost
 {
     public class MapInputCollection : Collection<MapInput>
     {
-        private Study _study;
+        private readonly Study _study;
 
         public MapInputCollection(Study study)
         {

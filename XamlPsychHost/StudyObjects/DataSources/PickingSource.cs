@@ -75,7 +75,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                     throw new NotImplementedException();
             }
 
-            int Factorial(int n, int to = 1) => n <= to ? 1 : n * Factorial(n - 1, to);
+            static int Factorial(int n, int to = 1) => n <= to ? 1 : n * Factorial(n - 1, to);
         }
 
         public override IEnumerable<object> GenerateItems(StudyContext context)
@@ -203,8 +203,8 @@ namespace HurlbertVisionLab.XamlPsychHost
 
     public class PickedItem : IReadOnlyList<object>, ILogInfo
     {
-        private object[] _items;
-        private int[] _indices;
+        private readonly object[] _items;
+        private readonly int[] _indices;
 
         public PickedItem(object[] items, int[] indices)
         {
