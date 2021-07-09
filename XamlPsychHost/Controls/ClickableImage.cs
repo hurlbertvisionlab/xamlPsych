@@ -77,8 +77,16 @@ namespace HurlbertVisionLab.XamlPsychHost
                 if (Points.Count >= MaximumPoints)
                     Points.RemoveAt(0);
 
-                Points.Add(e.GetPosition(this));
+                Size size = RenderSize;
+                Point p = e.GetPosition(this);
+
+                Points.Add(new Point(p.X / size.Width, p.Y / size.Height));
+
+                if (Points.Count == MaximumPoints)
+                    MaximumPointsReached?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public event EventHandler MaximumPointsReached;
     }
 }

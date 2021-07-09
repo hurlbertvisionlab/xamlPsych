@@ -33,7 +33,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             set { SetValue(StrokeProperty, value); }
         }
 
-        private PointCollection _points;
+        private readonly PointCollection _points;
         public PointsAdorner(UIElement adornedElement, PointCollection points) : base(adornedElement)
         {
             _points = points;
@@ -45,12 +45,18 @@ namespace HurlbertVisionLab.XamlPsychHost
             InvalidateVisual();
         }
 
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            InvalidateVisual();
+        }
+
         protected override void OnRender(DrawingContext drawingContext)
         {
             Pen pen = new Pen(Stroke, StrokeThickness);
+            Size size = RenderSize;
 
             foreach (Point p in _points)
-                drawingContext.DrawEllipse(null, pen, p, Radius, Radius);
+                drawingContext.DrawEllipse(null, pen, new Point(p.X * size.Width, p.Y * size.Height), Radius, Radius);
         }
     }
 }
