@@ -19,13 +19,16 @@ namespace HurlbertVisionLab.XamlPsychHost
             if (Hub == null)
                 throw new InvalidOperationException("No Light Hub assigned to this luminaire.");
 
+            if (color == null)
+                throw new ArgumentNullException("color");
+
             // TODO: create multicast group
-            // TODO: support 0.0-1.0 amplitudes
+            // TODO: support integral amplitudes
 
             ushort[] amplitudes = new ushort[color.Amplitudes.Count];
 
             for (int i = 0; i < amplitudes.Length; i++)
-                amplitudes[i] = (ushort)Math.Round(color.Amplitudes[i] * scale, 0);
+                amplitudes[i] = (ushort)Math.Round(color.Amplitudes[i] * scale * 4095, 0);
 
             foreach (int id in IDs)
                 await Hub.SetSpectrumA((ushort)id, amplitudes);

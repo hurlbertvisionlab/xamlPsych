@@ -16,7 +16,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         public async Task Show(double scale = 1.0)
         {
             foreach (SceneColor sc in SceneColors)
-                await sc.Luminaire.Show(sc.Color, scale);
+                await sc.Luminaire.Show(sc.Color, sc.Scale * scale);
         }
 
         public string ToLogString(StudyContext context)
