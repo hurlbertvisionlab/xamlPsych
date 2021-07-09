@@ -40,32 +40,29 @@ namespace HurlbertVisionLab.XamlPsychHost
                 _currentStudy = LineInfoWpfLoader.Load<Study>("HuaweiMultiLight.xaml");
                 _currentStudy.InputProviders.BindTo(this);
 
-                for (int i = 70; i < 80; i++)
+                Title = _currentStudy.Title + " - Hurlbert Vision Lab Study";
+                if ("Dark".Equals(_currentStudy.Theme, StringComparison.OrdinalIgnoreCase))
                 {
-                    Title = _currentStudy.Title + " - Hurlbert Vision Lab Study";
-                    if ("Dark".Equals(_currentStudy.Theme, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Resources["ThemeBackground"] = new SolidColorBrush(Colors.Black);
-                        Resources["ThemeForeground"] = new SolidColorBrush(Colors.White);
-                    }
-
-                    _context = new StudyContext(_currentStudy, this, this);
-                    _context.StepChanged += OnStudyStepChanged;
-
-                    PowerManagement.Request(PowerRequestType.DisplayRequired | PowerRequestType.ExecutionRequired | PowerRequestType.SystemRequired, Title);
-
-                    _context.Log(null, "Host", "======START======", _currentStudy.Title, _currentStudy.Date, _currentStudy.Author);
-                    _context.Log(null, "Host", "Environment", Environment.MachineName, Environment.UserName, Environment.Version, Environment.TickCount);
-                    _context.Log(null, "Host", "RandomSeed", _currentStudy.Seed);
-
-                    try
-                    {
-                        await _context.Execute(_currentStudy.Protocol, null, CancellationToken.None);
-
-                        Close();
-                    }
-                    catch (StudyException sx) { Content = sx; }
+                    Resources["ThemeBackground"] = new SolidColorBrush(Colors.Black);
+                    Resources["ThemeForeground"] = new SolidColorBrush(Colors.White);
                 }
+
+                _context = new StudyContext(_currentStudy, this, this);
+                _context.StepChanged += OnStudyStepChanged;
+
+                PowerManagement.Request(PowerRequestType.DisplayRequired | PowerRequestType.ExecutionRequired | PowerRequestType.SystemRequired, Title);
+
+                _context.Log(null, "Host", "======START======", _currentStudy.Title, _currentStudy.Date, _currentStudy.Author);
+                _context.Log(null, "Host", "Environment", Environment.MachineName, Environment.UserName, Environment.Version, Environment.TickCount);
+                _context.Log(null, "Host", "RandomSeed", _currentStudy.Seed);
+
+                try
+                {
+                    await _context.Execute(_currentStudy.Protocol, null, CancellationToken.None);
+
+                    Close();
+                }
+                catch (StudyException sx) { Content = sx; }
             }
             catch (Exception ex)
             {
@@ -81,7 +78,15 @@ namespace HurlbertVisionLab.XamlPsychHost
 
         public void Show(object element)
         {
-            Content = element;
+            if (Content == element)
+            {
+                Content = null; // do not reuse templated steps
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action<object>(Show), element);
+            }
+            else
+            {
+                Content = element;
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)
