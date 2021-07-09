@@ -96,6 +96,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                 Edge step = full.Scale((i + 1) / (double)hint.Length);
 
                 ColorRGB color = ToRGB(step.B);
+                color.Normalize();
                 hint[i].Color = Color.Multiply((Color)color, (float)MultiplierRGBA);
             }
         }
@@ -180,9 +181,18 @@ namespace HurlbertVisionLab.XamlPsychHost
             Point p = sRGBgamut.Clip(uv);
             BarycentricPoint b = BarycentricPoint.FromOrthogonal(p, sRGBgamut);
 
-            float max = (float)Math.Max(Math.Max(b.A, b.B), b.C);
+            double kR = b.A;
+            double kG = b.B;
+            double kB = b.C;
 
-            ColorRGB rgb = GamutRed * (float)b.A / max + GamutGreen * (float)b.B / max + GamutBlue * (float)b.C / max;
+            double norm = Math.Sqrt(kR * kR + kG * kG + kB * kB);
+            double sq3 = Math.Sqrt(3);
+
+            kR = sq3 * kR / norm;
+            kG = sq3 * kG / norm;
+            kB = sq3 * kB / norm;
+
+            ColorRGB rgb = GamutRed * (float)kR + GamutGreen * (float)kG + GamutBlue * (float)kB;
             return rgb;
         }
 
