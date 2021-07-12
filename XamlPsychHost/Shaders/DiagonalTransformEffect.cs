@@ -7,14 +7,14 @@ namespace HurlbertVisionLab.XamlPsychHost
 {
     public class DiagonalTransformEffect : ShaderEffect
     {
-        private static readonly PixelShader Shader = new PixelShader { UriSource = new Uri("pack://application:,,,/RunXamlStudy;component/Shaders/DiagonalTransform.ps") };
+        private static readonly PixelShader Shader = new PixelShader { UriSource = new Uri("pack://application:,,,/Shaders/DiagonalTransform.ps") };
 
         public DiagonalTransformEffect()
         {
             PixelShader = Shader;
 
             UpdateShaderValue(InputProperty);
-            UpdateShaderValue(RGBAProperty);            
+            UpdateShaderValue(RGBAProperty);
         }
 
         public static readonly DependencyProperty InputProperty = RegisterPixelShaderSamplerProperty(nameof(Input), typeof(DiagonalTransformEffect), 0);
