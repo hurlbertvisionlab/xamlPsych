@@ -2,7 +2,9 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,7 +45,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             try
             {
-                _currentStudy = LineInfoWpfLoader.Load<Study>("HuaweiMultiLight.xaml");
+                _currentStudy = LineInfoWpfLoader.Load<Study>(path);
                 _currentStudy.InputProviders.BindTo(this);
 
                 Title = _currentStudy.Title + " - Hurlbert Vision Lab Study";
@@ -61,6 +63,9 @@ namespace HurlbertVisionLab.XamlPsychHost
                 _context.Log(null, "Host", "======START======", _currentStudy.Title, _currentStudy.Date, _currentStudy.Author);
                 _context.Log(null, "Host", "Environment", Environment.MachineName, Environment.UserName, Environment.Version, Environment.TickCount);
                 _context.Log(null, "Host", "RandomSeed", _currentStudy.Seed);
+
+                string md5 = BitConverter.ToString(MD5.Create().ComputeHash(File.ReadAllBytes(path))).Replace("-", "").ToLowerInvariant();
+                _context.Log(null, "Host", "ProtocolHash", "MD5", md5);
 
                 _sessionCode.Text = "Session " + _context.UniqueID;
 
