@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Xml.Linq;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {
@@ -24,17 +27,20 @@ namespace HurlbertVisionLab.XamlPsychHost
 
         private void OnDispatcherException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Content = e.Exception;
+            Content = e.Exception.GetBaseException();
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             if (!Debugger.IsAttached)
             {
                 WindowStyle = WindowStyle.None;
                 WindowState = WindowState.Maximized;
             }
+        }
 
+        public async Task Load(string path)
+        {
             try
             {
                 _currentStudy = LineInfoWpfLoader.Load<Study>("HuaweiMultiLight.xaml");
@@ -56,17 +62,58 @@ namespace HurlbertVisionLab.XamlPsychHost
                 _context.Log(null, "Host", "Environment", Environment.MachineName, Environment.UserName, Environment.Version, Environment.TickCount);
                 _context.Log(null, "Host", "RandomSeed", _currentStudy.Seed);
 
-                try
-                {
-                    await _context.Execute(_currentStudy.Protocol, null, CancellationToken.None);
+                _sessionCode.Text = "Session " + _context.UniqueID;
 
-                    Close();
-                }
-                catch (StudyException sx) { Content = sx; }
+                await Preload();
             }
             catch (Exception ex)
             {
                 Content = ex;
+            }
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (!_running)
+                Run();
+        }
+
+        private async Task Preload()
+        {
+            foreach (DictionaryEntry resource in _context.Study.Resources)
+                if (resource.Value is IStudyPreloadable preloadable)
+                    if (preloadable.Preload)
+                    {
+                        _status.Text = $"Preloading {resource.Key}...";
+                        _statusProgress.Text = null;
+
+                        await preloadable.DoPreload(_context, new Progress<string>(ReportPreloadProgress), CancellationToken.None);
+                    }
+
+            _status.Text = "Press any key to start";
+            _statusProgress.Text = null;
+        }
+        private void ReportPreloadProgress(string s)
+        {
+            _statusProgress.Text = s;
+        }
+
+        private bool _running;
+        public async void Run()
+        {
+            try
+            {
+                _running = true;
+                await _context.Execute(_currentStudy.Protocol, null, CancellationToken.None);
+
+                Close();
+            }
+            catch (StudyException sx)
+            {
+                while (sx.InnerException is StudyException inner)
+                    sx = inner;
+
+                Content = sx;
             }
         }
 

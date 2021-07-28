@@ -127,9 +127,13 @@
     <Compile Include="LineInfoXamlObjectWriter.cs" />
     <Compile Include="MarkupExtensions\AdvanceExtension.cs" />
     <Compile Include="MarkupExtensions\ItemContextMarkupExtension.cs" />
+    <Compile Include="MenuWindow.xaml.cs">
+      <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shaders\DiagonalTransformEffect.cs" />
     <Compile Include="StudyObjects\DataSources\CombiningSource.cs" />
     <Compile Include="Converters\IlluminantConverter.cs" />
+    <Compile Include="StudyObjects\IStudyPreloadable.cs" />
     <Compile Include="StudyObjects\DataSources\RepeatingSource.cs" />
     <Compile Include="StudyObjects\ILogInfo.cs" />
     <Compile Include="StudyObjects\StudySteps\Flow\When.cs" />
@@ -176,6 +180,10 @@
     <Compile Include="StudyTemplateSelector.cs" />
     <Compile Include="InputProviders\XInput\XInput.cs" />
     <Compile Include="TokenStringSet.cs" />
+    <Page Include="MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Shaders\DiagonalTransform.ps" />
     <None Include="HuaweiMultiLight.xaml">
       <Generator>MSBuild:Compile</Generator>

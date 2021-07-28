@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {
-    public class ImagesDirectorySource : StudyDataSource
+    public class ImagesDirectorySource : StudyDataSource, IStudyPreloadable
     {
         public static readonly DependencyProperty DirectoryProperty = DependencyProperty.Register(nameof(Directory), typeof(string), typeof(ImagesDirectorySource), new PropertyMetadata("."));
         public static readonly DependencyProperty FilesPatternProperty = DependencyProperty.Register(nameof(FilesPattern), typeof(string), typeof(ImagesDirectorySource), new PropertyMetadata("*"));
@@ -35,8 +37,19 @@ namespace HurlbertVisionLab.XamlPsychHost
             Files = new TokenStringCollection();
         }
 
+        public bool Preload { get; set; }
 
         public override IEnumerable<object> GenerateItems(StudyContext context)
+        {
+            IEnumerable<string> files = _itemsPaths ?? GenerateItemPaths(context);
+
+            foreach (string file in files)
+                if (_itemsCache.TryGetValue(file, out ImageItem image))
+                    yield return image;
+                else
+                    yield return GetImageItem(file);
+        }
+        protected string[] GenerateItemPaths(StudyContext context)
         {
             string[] files;
             string resolved = System.IO.Path.GetFullPath(Directory);
@@ -65,9 +78,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                 throw new StudyException(context, $"A system or hardware error occured when trying to list images in the '{resolved}' directory.", e, this);
             }
 
-            foreach (string file in files)
-                if (GetImageItem(file) is ImageItem image)
-                    yield return image;
+            return files;
         }
 
         public virtual ImageItem GetImageItem(string file)
@@ -84,6 +95,23 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             return System.IO.Directory.GetFiles(Directory).Length;
         }
+
+        private IEnumerable<string> _itemsPaths;
+        private Dictionary<string, ImageItem> _itemsCache = new Dictionary<string, ImageItem>(StringComparer.OrdinalIgnoreCase);
+
+        public async Task DoPreload(StudyContext context, IProgress<string> progress, CancellationToken cancellationToken)
+        {
+            progress.Report("Enumerating files...");
+            _itemsPaths = GenerateItemPaths(context);
+
+            foreach (string file in _itemsPaths)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                progress.Report(Path.GetFileName(file));
+                await Task.Run(() => context.Dispatcher.Invoke(() => _itemsCache[file] = GetImageItem(file), System.Windows.Threading.DispatcherPriority.ApplicationIdle));
+            }
+        }
     }
 
     public class LibRawDirectorySource : ImagesDirectorySource
@@ -91,8 +119,6 @@ namespace HurlbertVisionLab.XamlPsychHost
         public override ImageItem GetImageItem(string file)
         {
             LibRawWrapper.LibRawBitmapDecoder raw = new LibRawWrapper.LibRawBitmapDecoder(new Uri(file), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.None);
-            
-            System.Diagnostics.Debug.WriteLine("### LIBRAW DECODING");
             BitmapSource bitmap = raw.Frames[0];
 
             return new ImageItem

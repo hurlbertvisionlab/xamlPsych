@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:psych="clr-namespace:HurlbertVisionLab.XamlPsychHost"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MenuWindow.xaml">
     <Application.Resources>
 
         <SolidColorBrush x:Key="ThemeBackground" Color="White" />
@@ -139,15 +139,7 @@
             <Image Source="{Binding Image}" />
         </DataTemplate>
 
-        <Style TargetType="{x:Type psych:SelectionBox}">
-            <!--<Setter Property="ItemsSource" Value="{Binding ItemContext}" />-->
-            <Setter Property="SelectedItem" Value="{Binding Step.Result, Mode=OneWayToSource}" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Margin" Value="20" />
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
-        </Style>
-        <Style TargetType="ListBoxItem">
+        <Style x:Key="SelectionBoxItem" TargetType="ListBoxItem">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -163,6 +155,17 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource SelectionBoxItem}" />
+        
+        <Style TargetType="{x:Type psych:SelectionBox}">
+            <!--<Setter Property="ItemsSource" Value="{Binding ItemContext}" />-->
+            <Setter Property="SelectedItem" Value="{Binding Step.Result, Mode=OneWayToSource}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Margin" Value="20" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        </Style>
+
 
         <DataTemplate DataType="{x:Type psych:StudyException}">
             <DataTemplate.Resources>
@@ -209,6 +212,8 @@
         <DataTemplate DataType="{x:Type system:Exception}">
             <TextBlock Text="{Binding}" TextWrapping="Wrap" />
         </DataTemplate>
+        
+        
 
     </Application.Resources>
 </Application>

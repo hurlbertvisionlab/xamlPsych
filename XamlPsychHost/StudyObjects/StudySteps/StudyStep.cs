@@ -279,7 +279,8 @@ namespace HurlbertVisionLab.XamlPsychHost
 
         public void Advance(string reason)
         {
-            _explicitTaskSource.SetResult(reason);
+            // tolerate multiple calls (in case UI takes time and user keeps advancing)
+            _explicitTaskSource.TrySetResult(reason);
         }
 
         protected abstract Task Execute(CancellationToken cancellationToken);

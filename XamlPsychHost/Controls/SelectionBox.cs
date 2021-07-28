@@ -34,6 +34,14 @@ namespace HurlbertVisionLab.XamlPsychHost
             ItemContainerGenerator.StatusChanged += OnGeneratorStatusChanged;
         }
 
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            if (SelectedIndex >= 0)
+                if (ItemContainerGenerator.ContainerFromIndex(SelectedIndex) is UIElement el)
+                    el.Focus();
+        }
+
+
         private void OnStudyInput(object sender, StudyInputEventArgs args)
         {
             if (sender is not KeyboardInputProvider && _inputToKey.TryGetValue(args.Input, out Key key))

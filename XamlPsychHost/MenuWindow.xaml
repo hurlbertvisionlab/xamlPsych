@@ -1,0 +1,39 @@
+﻿<Window x:Class="HurlbertVisionLab.XamlPsychHost.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:HurlbertVisionLab.XamlPsychHost"
+        Title="Main Menu - Run Study - Hurlbert Vision Lab" Width="1920" Height="1080" Loaded="OnLoaded">
+
+    <local:SelectionBox x:Name="_menu" HorizontalAlignment="Center" VerticalAlignment="Center" SelectionChanged="OnMenuSelectionChanged" FontFamily="Arial" FontSize="32" KeyDown="OnMenuKeyDown" ForceSelection="True">
+        <local:SelectionBox.Resources>
+            <DataTemplate DataType="{x:Type local:RunItem}">
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Width="48" Height="48">
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup>
+                                        <DrawingGroup.Children>
+                                            <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                            <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M2.9997,-0.000199999999999534L2.9997,15.9998 13.6677,7.9998z" />
+                                            <GeometryDrawing Brush="#FF388934" Geometry="F1M4,2L4,14 12,8z" />
+                                        </DrawingGroup.Children>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Description}" FontSize="24" />
+                    </StackPanel>
+                </DockPanel>
+            </DataTemplate>
+        </local:SelectionBox.Resources>
+        
+        <ListBoxItem Name="_menuSave">Save data to flash drive</ListBoxItem>
+        <ListBoxItem Name="_menuExit">Exit to system</ListBoxItem>
+    </local:SelectionBox>
+
+</Window>

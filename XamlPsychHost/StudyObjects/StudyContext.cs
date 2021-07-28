@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using System.Xml;
 
 namespace HurlbertVisionLab.XamlPsychHost
@@ -28,6 +29,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         public StudyStepContext CurrentStep => _currentSteps?.Count > 0 ? _currentSteps.Peek() : null;
         public int StepNumber => _pastSteps.Count + _currentSteps.Count;
 
+        public Dispatcher Dispatcher { get; }
         public Study Study { get; }
         public IStudyPresentationSink Screen { get; }
         public IStudyInputSource Input { get; }
@@ -55,6 +57,7 @@ namespace HurlbertVisionLab.XamlPsychHost
 
         public StudyContext(Study study, IStudyPresentationSink screen, IStudyInputSource input)
         {
+            Dispatcher = Dispatcher.CurrentDispatcher;
             Study = study;
             Screen = screen;
             Input = input;

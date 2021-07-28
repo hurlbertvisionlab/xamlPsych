@@ -9,4 +9,12 @@
         TextBlock.Foreground="{DynamicResource ThemeForeground}"
         Background="{DynamicResource ThemeBackground}"
         
-        Loaded="OnLoaded" />
+        Loaded="OnLoaded">
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Name="_sessionCode" HorizontalAlignment="Center" />
+        <TextBlock Name="_status" Text="Loading..." HorizontalAlignment="Center" Margin="0,1cm,0,0" />
+        <TextBlock Name="_statusProgress" HorizontalAlignment="Center" />
+    </StackPanel>
+    
+</Window>
