@@ -49,5 +49,4 @@ namespace HurlbertVisionLab.XamlPsychHost
             return Task.CompletedTask;
         }
     }
-
 }

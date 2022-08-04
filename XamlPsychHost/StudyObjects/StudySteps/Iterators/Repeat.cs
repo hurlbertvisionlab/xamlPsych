@@ -31,7 +31,10 @@ namespace HurlbertVisionLab.XamlPsychHost
             for (int i = 0; i < Times; i++)
             {
                 if (cancellationToken.IsCancellationRequested)
+                {
+                    StudyContext.Log(this, this, "Cancelled");
                     break;
+                }
 
                 StudyContext.Log(this, this, "NextItem", i);
                 await StudyContext.Execute(Steps, ItemContext, cancellationToken);

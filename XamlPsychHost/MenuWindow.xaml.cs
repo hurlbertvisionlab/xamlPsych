@@ -28,7 +28,17 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             InitializeComponent();
 
-            foreach (string file in Directory.EnumerateFiles(".", "*.xaml"))
+            List<string> files = new List<string>();
+            foreach (string arg in Environment.GetCommandLineArgs().Skip(1).Concat(new[] { "." }))
+            {
+                if (Directory.Exists(arg))
+                    files.AddRange(Directory.EnumerateFiles(arg, "*.xaml"));
+
+                else if (File.Exists(arg))
+                    files.Add(arg);
+            }
+
+            foreach (string file in files)
             {
                 XDocument xml;
                 try

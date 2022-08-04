@@ -208,6 +208,11 @@ namespace HurlbertVisionLab.XamlPsychHost
             _disposed = true;
             _logEvent.Set();
             _logEvent.WaitOne();
+
+            if (Study.Resources != null)
+                foreach (System.Collections.DictionaryEntry entry in Study.Resources)
+                    if (entry.Value is IStudyDisposableResource disposable)
+                        disposable.Dispose(this);
         }
     }
 }

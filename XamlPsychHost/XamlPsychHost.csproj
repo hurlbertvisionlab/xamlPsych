@@ -95,10 +95,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HurlbertVisionLab.LibRawWrapper">
-      <Version>1.0.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="HurlbertVisionLab.LightHub" Version="1.0.0" />
     <PackageReference Include="UAM.Optics.ColorScience" Version="1.0.0.1" />
   </ItemGroup>
   <ItemGroup>
@@ -126,16 +122,18 @@
     <Compile Include="InputProviders\XInput\MapGamepad.cs" />
     <Compile Include="LineInfoXamlObjectWriter.cs" />
     <Compile Include="MarkupExtensions\AdvanceExtension.cs" />
-    <Compile Include="MarkupExtensions\ItemContextMarkupExtension.cs" />
+    <Compile Include="MarkupExtensions\StudyObjectMarkupExtension.cs" />
     <Compile Include="MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shaders\DiagonalTransformEffect.cs" />
     <Compile Include="StudyObjects\DataSources\CombiningSource.cs" />
     <Compile Include="Converters\IlluminantConverter.cs" />
+    <Compile Include="StudyObjects\IStudyDisposableResource.cs" />
     <Compile Include="StudyObjects\IStudyPreloadable.cs" />
     <Compile Include="StudyObjects\DataSources\RepeatingSource.cs" />
     <Compile Include="StudyObjects\ILogInfo.cs" />
+    <Compile Include="StudyObjects\DataSources\TokensSource.cs" />
     <Compile Include="StudyObjects\StudySteps\Flow\When.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\VibrateGamepad.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\HideCursor.cs" />
@@ -144,6 +142,8 @@
     <Compile Include="StudyObjects\StudySteps\Iterators\Repeat.cs" />
     <Compile Include="StudyObjects\StudySteps\Iterators\StudyIterator.cs" />
     <Compile Include="StudyObjects\StudySteps\Iterators\BreakOpportunity.cs" />
+    <Compile Include="StudyObjects\StudySteps\Input\AskForChoice.cs" />
+    <Compile Include="StudyObjects\StudySteps\Input\AskForTextInput.cs" />
     <Compile Include="StudyObjects\StudySteps\UI\CollectClicks.cs" />
     <Compile Include="StudyObjects\StudySteps\UI\InteractiveDiagonalTransform.cs" />
     <Compile Include="Converters\UnsafeSingleConverter.cs" />
@@ -152,7 +152,6 @@
     <Compile Include="StudyObjects\DataSources\ObjectSource.cs" />
     <Compile Include="InputProviders\InputProviderCollection.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\Audio\Beep.cs" />
-    <Compile Include="StudyObjects\StudySteps\Hardware\Ledmotive\DimLights.cs" />
     <Compile Include="StudyObjects\StudySteps\Store.cs" />
     <Compile Include="StudyObjects\StudySteps\StudyUIStep.cs" />
     <Compile Include="TokenStringCollection.cs" />
@@ -162,17 +161,12 @@
     <Compile Include="InputProviders\StudyInputEvent.cs" />
     <Compile Include="StudyObjects\StudySteps\StudyStepCollection.cs" />
     <Compile Include="StudyObjects\StudySteps\StudyStepContext.cs" />
-    <Compile Include="StudyObjects\StudySteps\Hardware\Ledmotive\SetLights.cs" />
     <Compile Include="StudyObjects\DataSources\StudyDataSource.cs" />
     <Compile Include="StudyObjects\DataSources\ImagesDirectorySource.cs" />
     <Compile Include="StudyObjects\DataSources\PickingSource.cs" />
     <Compile Include="StudyObjects\DataSources\ResourceSource.cs" />
     <Compile Include="StudyObjects\StudySteps\Iterators\ForEach.cs" />
     <Compile Include="StudyObjects\StudySteps\UI\Instructions.cs" />
-    <Compile Include="StudyObjects\Resources\Luminaire.cs" />
-    <Compile Include="StudyObjects\Resources\LuminaireColor.cs" />
-    <Compile Include="StudyObjects\Resources\LuminaireScene.cs" />
-    <Compile Include="StudyObjects\Resources\SceneColor.cs" />
     <Compile Include="StudyObjects\StudySteps\UI\ShowStimuli.cs" />
     <Compile Include="StudyObjects\Study.cs" />
     <Compile Include="StudyObjects\StudySteps\StudyStep.cs" />
@@ -185,11 +179,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Resource Include="Shaders\DiagonalTransform.ps" />
-    <None Include="HuaweiMultiLight.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -215,14 +204,6 @@
     <Resource Include="App.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ILMerge">
-      <Version>3.0.41</Version>
-    </PackageReference>
-    <PackageReference Include="System.Text.Json">
-      <Version>5.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
@@ -240,7 +221,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(ILMergeConsolePath) /wildcards /out:$(ProjectDir)bin\$(TargetFileName) $(TargetPath) $(TargetDir)System*.dll $(TargetDir)Microsoft*.dll</PostBuildEvent>
+    <!--<PostBuildEvent>$(ILMergeConsolePath) /wildcards /out:$(ProjectDir)bin\$(TargetFileName) $(TargetPath) $(TargetDir)System*.dll $(TargetDir)Microsoft*.dll</PostBuildEvent>-->
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

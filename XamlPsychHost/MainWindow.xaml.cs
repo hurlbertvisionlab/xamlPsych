@@ -48,7 +48,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                 _currentStudy = LineInfoWpfLoader.Load<Study>(path);
                 _currentStudy.InputProviders.BindTo(this);
 
-                Title = _currentStudy.Title + " - Hurlbert Vision Lab Study";
+                Title = _currentStudy.Title + " - Lab Study";
                 if ("Dark".Equals(_currentStudy.Theme, StringComparison.OrdinalIgnoreCase))
                 {
                     Resources["ThemeBackground"] = new SolidColorBrush(Colors.Black);
@@ -73,7 +73,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             }
             catch (Exception ex)
             {
-                Content = ex;
+                Content = ex.GetBaseException();
             }
         }
 
@@ -104,28 +104,33 @@ namespace HurlbertVisionLab.XamlPsychHost
         }
 
         private bool _running;
+        private CancellationTokenSource _runCancellation = new CancellationTokenSource();
         public async void Run()
         {
             try
             {
                 _running = true;
-                await _context.Execute(_currentStudy.Protocol, null, CancellationToken.None);
+                await _context.Execute(_currentStudy.Protocol, null, _runCancellation.Token);
 
                 Close();
             }
-            catch (StudyException sx)
-            {
-                while (sx.InnerException is StudyException inner)
-                    sx = inner;
+            //catch (StudyException sx)
+            //{
+            //    while (sx.InnerException is StudyException inner)
+            //        sx = inner;
 
-                Content = sx;
+            //    Content = sx;
+            //}
+            catch (Exception ex)
+            {
+                Content = ex.GetBaseException();
             }
         }
 
         private void OnStudyStepChanged(object sender, EventArgs e)
         {
             if (sender is StudyContext context && context.CurrentStep != null)
-                Title = $"{_currentStudy.Title} [{context.StepNumber}:{context.CurrentStep.Name}] + Hurlbert Vision Lab Study";
+                Title = $"{_currentStudy.Title} [{context.StepNumber}:{context.CurrentStep.Name}] - Lab Study";
         }
 
         public void Show(object element)
@@ -138,6 +143,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             else
             {
                 Content = element;
+                Dispatcher.BeginInvoke(DispatcherPriority.Loaded, () => MoveFocus(new TraversalRequest(FocusNavigationDirection.First)));
             }
         }
 
@@ -145,6 +151,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             if (_context != null)
             {
+                _runCancellation.Cancel();
                 _context.Log(null, "Host", "~~~~~~END~~~~~~", _currentStudy.Title);
                 _context.Dispose();
             }

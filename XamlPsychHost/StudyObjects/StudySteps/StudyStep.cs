@@ -46,11 +46,6 @@ namespace HurlbertVisionLab.XamlPsychHost
             obj.SetValue(ItemContextProperty, value);
         }
 
-
-        //public static readonly DependencyProperty StudyContextProperty = DependencyProperty.Register(nameof(StudyContext), typeof(StudyContext), typeof(StudyObject), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
-        //public static readonly DependencyProperty StepContextProperty = DependencyProperty.Register(nameof(StepContext), typeof(StudyStepContext), typeof(StudyObject), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
-        //public static readonly DependencyProperty ItemContextProperty = DependencyProperty.Register(nameof(ItemContext), typeof(object), typeof(StudyObject), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
-
         public StudyContext StudyContext
         {
             get { return (StudyContext)GetValue(StudyContextProperty); }

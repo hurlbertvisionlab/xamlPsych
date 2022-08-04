@@ -24,7 +24,10 @@ namespace HurlbertVisionLab.XamlPsychHost
             foreach (StudyStep step in _steps)
             {
                 if (cancellationToken.IsCancellationRequested)
+                {
+                    StudyContext.Log(this, this, "Cancelled");
                     break;
+                }
 
                 await StudyContext.Execute(step, ItemContext, cancellationToken);
             }

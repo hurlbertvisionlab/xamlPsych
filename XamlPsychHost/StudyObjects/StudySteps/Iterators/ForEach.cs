@@ -99,7 +99,10 @@ namespace HurlbertVisionLab.XamlPsychHost
             while (items.Count > 0)
             {
                 if (cancellationToken.IsCancellationRequested)
+                {
+                    StudyContext.Log(this, this, "Cancelled");
                     break;
+                }
 
                 int index = StudyContext.Random.Next(0, items.Count);
                 StudyContext.Log(this, this, "NextItem", index, indices[index]);
