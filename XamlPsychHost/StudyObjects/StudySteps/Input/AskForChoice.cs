@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,10 +64,8 @@ namespace HurlbertVisionLab.XamlPsychHost
     }
 
     [ContentProperty(nameof(Items))]
-    public class AskForChoice : StudyUIStep
+    public class AskForChoice : AskForStep
     {
-        public static readonly DependencyProperty PromptProperty = DependencyProperty.Register(nameof(Prompt), typeof(string), typeof(AskForChoice), new PropertyMetadata(null));
-        public static readonly DependencyProperty ContinueTextProperty = DependencyProperty.Register(nameof(ContinueText), typeof(string), typeof(AskForChoice), new PropertyMetadata("Continue"));
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(nameof(ItemsSource), typeof(object), typeof(AskForChoice), new PropertyMetadata(OnItemsSourceChanged)); // TODO: consider taking ownership of StudyIterator
         public static readonly DependencyProperty ItemsOrderProperty = DependencyProperty.Register(nameof(ItemsOrder), typeof(Order), typeof(AskForChoice), new PropertyMetadata(OnItemsOrderChanged));
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(AskForChoice));
@@ -156,22 +153,9 @@ namespace HurlbertVisionLab.XamlPsychHost
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        public string ContinueText
-        {
-            get { return (string)GetValue(ContinueTextProperty); }
-            set { SetValue(ContinueTextProperty, value); }
-        }
-
-        public string Prompt
-        {
-            get { return (string)GetValue(PromptProperty); }
-            set { SetValue(PromptProperty, value); }
-        }
-
         static AskForChoice()
         {
             StudyContextProperty.OverrideMetadata(typeof(AskForChoice), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits, OnItemsSourceChanged));
-            AdvanceWhenDoneProperty.OverrideMetadata(typeof(AskForChoice), new PropertyMetadata(false));
         }
 
         protected override Task Execute(CancellationToken cancellationToken)
@@ -183,14 +167,5 @@ namespace HurlbertVisionLab.XamlPsychHost
             StudyContext.Screen.Show(this);
             return Task.CompletedTask;
         }
-
-        public override void OnStudyInput(object sender, StudyInputEventArgs args)
-        {
-            if (args.Input == "Confirm")
-                Advance(args.Input);
-
-            args.Handled = true; // do not log key presses
-        }
-
     }
 }

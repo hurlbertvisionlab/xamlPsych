@@ -139,6 +139,8 @@
     <Compile Include="StudyObjects\StudySteps\Hardware\HideCursor.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\ShowCursor.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\Audio\Speak.cs" />
+    <Compile Include="StudyObjects\StudySteps\Input\AskForRating.cs" />
+    <Compile Include="StudyObjects\StudySteps\Input\AskForStep.cs" />
     <Compile Include="StudyObjects\StudySteps\Iterators\Repeat.cs" />
     <Compile Include="StudyObjects\StudySteps\Iterators\StudyIterator.cs" />
     <Compile Include="StudyObjects\StudySteps\Iterators\BreakOpportunity.cs" />

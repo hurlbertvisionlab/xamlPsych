@@ -178,8 +178,8 @@
                     <Setter Property="BorderBrush" Value="White" />
                 </Trigger>
             </Style.Triggers>
-        </Style>  
-        
+        </Style>
+
         <DataTemplate DataType="{x:Type psych:AskForTextInput}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="{Binding Prompt}" />
@@ -200,8 +200,37 @@
                 <Button Content="{Binding ContinueText}" Click="{psych:Advance Continue}" HorizontalAlignment="Right" Style="{StaticResource StudyInputControl}" />
             </StackPanel>
         </DataTemplate>
-        
-        
+
+        <DataTemplate DataType="{x:Type psych:AskForRating}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Prompt}" />
+                <StackPanel Margin="0,0.5cm" Grid.IsSharedSizeScope="True">
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition SharedSizeGroup="Label" />
+                            <ColumnDefinition MinWidth="10cm" />
+                            <ColumnDefinition SharedSizeGroup="Label" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding MinimumText}" TextAlignment="Right" />
+                        <Slider Margin="0.5cm,0" Grid.Column="1" Name="PART_Slider" VerticalAlignment="Center" Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" IsMoveToPointEnabled="True" TickFrequency="{Binding Step}" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Value="{Binding Value}" Foreground="{DynamicResource ThemeForeground}">
+                            <Slider.LayoutTransform>
+                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                            </Slider.LayoutTransform>
+                        </Slider>
+                        <TextBlock Grid.Column="2" Text="{Binding MaximumText}" TextAlignment="Left" />
+                    </Grid>
+                </StackPanel>
+                <Button Content="{Binding ContinueText}" Click="{psych:Advance Continue}" HorizontalAlignment="Right" Style="{StaticResource StudyInputControl}" />
+            </StackPanel>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Step}" Value="0">
+                    <Setter TargetName="PART_Slider" Property="IsSnapToTickEnabled" Value="False" />
+                    <Setter TargetName="PART_Slider" Property="TickPlacement" Value="None" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+
         <DataTemplate DataType="{x:Type psych:StudyException}">
             <DataTemplate.Resources>
                 <DataTemplate DataType="{x:Type system:Exception}">
