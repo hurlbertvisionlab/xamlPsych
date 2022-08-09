@@ -14,7 +14,7 @@ using System.Windows.Markup;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {
-    public class ChoiceItem
+    public class ChoiceItem : ILogInfo
     {
         public ChoiceItem() { DataIndex = -1; }
         public ChoiceItem(int dataIndex, object data)
@@ -26,7 +26,8 @@ namespace HurlbertVisionLab.XamlPsychHost
         public int DataIndex { get; set; }
         public object Data { get; set; }
 
-        public override string ToString() => string.Join(",", DataIndex, Data); // TODO: StudyContext lookup LogName, both for Result and choice order
+        public override string ToString() => string.Join(",", DataIndex, Data);
+        public string ToLogString(StudyContext context) => string.Join(",", context.ToLogString(Data));
     }
 
     public class ChoiceItemCollection : ObservableCollection<ChoiceItem>

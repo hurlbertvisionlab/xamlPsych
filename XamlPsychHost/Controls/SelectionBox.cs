@@ -61,11 +61,14 @@ namespace HurlbertVisionLab.XamlPsychHost
             if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {
                 if (ForceSelection)
-                    SelectedIndex = 0;
+                {
+                    if (SelectedIndex < 0)
+                        SelectedIndex = 0;
 
-                int selectedIndex = Math.Max(0, SelectedIndex);
-                if (ItemContainerGenerator.ContainerFromIndex(selectedIndex) is UIElement)
-                    Focus();
+                    int selectedIndex = Math.Max(0, SelectedIndex);
+                    if (ItemContainerGenerator.ContainerFromIndex(selectedIndex) is UIElement)
+                        Focus();
+                }
             }
         }
     }

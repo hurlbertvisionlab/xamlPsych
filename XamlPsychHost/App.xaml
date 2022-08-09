@@ -195,7 +195,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="{Binding Prompt}" />
                 <StackPanel Margin="0,0.5cm">
-                    <psych:SelectionBox ItemsSource="{Binding Items}" ItemTemplate="{Binding ItemTemplate}" ItemsPanel="{Binding Layout}" SelectedItem="{Binding Result, Mode=OneWayToSource}" />
+                    <psych:SelectionBox ItemsSource="{Binding Items}" ItemTemplate="{Binding ItemTemplate}" ItemsPanel="{Binding Layout}" SelectedItem="{Binding Result, Mode=OneWayToSource}" ForceSelection="False" />
                 </StackPanel>
                 <Button Content="{Binding ContinueText}" Click="{psych:Advance Continue}" HorizontalAlignment="Right" Style="{StaticResource StudyInputControl}" />
             </StackPanel>
@@ -203,7 +203,7 @@
 
         <DataTemplate DataType="{x:Type psych:AskForRating}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Prompt}" />
+                <TextBlock Text="{Binding Prompt}" TextAlignment="Center" />
                 <StackPanel Margin="0,0.5cm" Grid.IsSharedSizeScope="True">
                     <Grid VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
