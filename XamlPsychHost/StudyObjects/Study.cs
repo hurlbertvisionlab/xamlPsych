@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 
 namespace HurlbertVisionLab.XamlPsychHost
@@ -10,6 +11,9 @@ namespace HurlbertVisionLab.XamlPsychHost
         public string Author { get; set; }
         public DateTime Date { get; set; }
         public string Theme { get; set; }
+
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double FontSize { get; set; } = 32;
 
         public InputProviderCollection InputProviders { get; } = new InputProviderCollection();
         public StudyStepCollection Protocol { get; } = new StudyStepCollection();

@@ -24,7 +24,7 @@
 
         <DataTemplate DataType="{x:Type psych:Instructions}">
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="{Binding Text}" TextAlignment="Center" />
+                <TextBlock Text="{Binding Text}" TextAlignment="Center" TextWrapping="Wrap" />
                 <TextBlock Name="Timer" Text="{Binding RemainingToAdvance, StringFormat=mm\\:ss}" TextAlignment="Center" Margin="0,1cm,0,0" />
             </StackPanel>
             <DataTemplate.Triggers>

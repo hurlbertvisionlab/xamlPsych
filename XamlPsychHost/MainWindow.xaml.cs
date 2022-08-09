@@ -48,6 +48,9 @@ namespace HurlbertVisionLab.XamlPsychHost
                 _currentStudy = LineInfoWpfLoader.Load<Study>(path);
                 _currentStudy.InputProviders.BindTo(this);
 
+                if (_currentStudy.FontSize > 0)
+                    FontSize = _currentStudy.FontSize;
+
                 Title = _currentStudy.Title + " - Lab Study";
                 if ("Dark".Equals(_currentStudy.Theme, StringComparison.OrdinalIgnoreCase))
                 {
