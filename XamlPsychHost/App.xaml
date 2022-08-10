@@ -25,18 +25,13 @@
         <DataTemplate DataType="{x:Type psych:Instructions}">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="{Binding Text}" TextAlignment="Center" TextWrapping="Wrap" />
-                <TextBlock Name="Timer" Text="{Binding RemainingToAdvance, StringFormat=mm\\:ss}" TextAlignment="Center" Margin="0,1cm,0,0" />
+                <psych:RemainingTime Margin="0,1cm,0,0" />
             </StackPanel>
-            <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding RemainingToAdvance}" Value="0">
-                    <Setter TargetName="Timer" Property="Visibility" Value="Collapsed" />
-                </DataTrigger>
-            </DataTemplate.Triggers>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type psych:ShowStimuli}">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Bottom" Name="Timer" Text="{Binding RemainingToAdvance, StringFormat=mm\\:ss}" TextAlignment="Center" Margin="0,1cm" />
+                <psych:RemainingTime DockPanel.Dock="Bottom" Margin="0,1cm"  />
 
                 <Viewbox DockPanel.Dock="Top" Margin="1cm" StretchDirection="DownOnly">
                     <TextBlock Text="{Binding InstructionsAbove}" TextAlignment="Center" />
@@ -48,16 +43,11 @@
 
                 <ContentControl Content="{Binding StepContext}" ContentTemplate="{Binding ContentTemplate}" />
             </DockPanel>
-            <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding RemainingToAdvance}" Value="0">
-                    <Setter TargetName="Timer" Property="Visibility" Value="Collapsed" />
-                </DataTrigger>
-            </DataTemplate.Triggers>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type psych:InteractiveDiagonalTransform}">
             <DockPanel>
-                <TextBlock DockPanel.Dock="Bottom" Name="Timer" Text="{Binding RemainingToAdvance, StringFormat=mm\\:ss}" TextAlignment="Center" Margin="0,1cm" />
+                <psych:RemainingTime DockPanel.Dock="Bottom" Margin="0,1cm"  />
 
                 <Viewbox Name="Above" DockPanel.Dock="Top" Margin="1cm" StretchDirection="DownOnly">
                     <TextBlock Text="{Binding InstructionsAbove}" TextAlignment="Center" />
@@ -123,9 +113,6 @@
 
             </DockPanel>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding RemainingToAdvance}" Value="0">
-                    <Setter TargetName="Timer" Property="Visibility" Value="Collapsed" />
-                </DataTrigger>
                 <DataTrigger Binding="{Binding InstructionsAbove}" Value="{x:Null}">
                     <Setter TargetName="Above" Property="Visibility" Value="Collapsed" />
                 </DataTrigger>

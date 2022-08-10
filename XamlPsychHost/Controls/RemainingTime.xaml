@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="HurlbertVisionLab.XamlPsychHost.RemainingTime"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <TextBlock Text="{Binding RemainingToAdvance, StringFormat=mm\\:ss}" TextAlignment="Center" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RemainingToAdvance}" Value="0">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RemainingToAdvanceDisplay}" Value="None">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding RemainingToAdvanceDisplay}" Value="Progress">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <ProgressBar Height="20" MaxWidth="300" Maximum="{Binding AdvanceAfter.TotalSeconds}" Value="{Binding RemainingToAdvance.TotalSeconds, Mode=OneWay}" 
+                                             Background="{DynamicResource ThemeBackground}" Foreground="{DynamicResource ThemeForeground}" BorderBrush="{x:Null}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>            
+                <DataTrigger Binding="{Binding RemainingToAdvanceDisplay}" Value="ProgressIncreasing">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <ProgressBar Height="20" MaxWidth="300" Maximum="{Binding AdvanceAfter.TotalSeconds}" Value="{Binding RemainingToAdvance.TotalSeconds, Mode=OneWay}" 
+                                             Background="{DynamicResource ThemeForeground}" Foreground="{DynamicResource ThemeBackground}" BorderBrush="{x:Null}" FlowDirection="RightToLeft" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>            
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+</UserControl>

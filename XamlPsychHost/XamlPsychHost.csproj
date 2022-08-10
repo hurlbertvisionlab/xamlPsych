@@ -110,6 +110,9 @@
     </Compile>
     <Compile Include="Adorners\PointsAdorner.cs" />
     <Compile Include="Controls\ClickableImage.cs" />
+    <Compile Include="Controls\RemainingTime.xaml.cs">
+      <DependentUpon>RemainingTime.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SelectionBox.cs" />
     <Compile Include="InputProviders\IInputProvider.cs" />
     <Compile Include="InputProviders\Keyboard\KeyboardInputProvider.cs" />
@@ -176,6 +179,10 @@
     <Compile Include="StudyTemplateSelector.cs" />
     <Compile Include="InputProviders\XInput\XInput.cs" />
     <Compile Include="TokenStringSet.cs" />
+    <Page Include="Controls\RemainingTime.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
