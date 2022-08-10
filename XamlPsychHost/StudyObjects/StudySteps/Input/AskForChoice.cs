@@ -154,17 +154,19 @@ namespace HurlbertVisionLab.XamlPsychHost
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        static AskForChoice()
-        {
-            StudyContextProperty.OverrideMetadata(typeof(AskForChoice), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits, OnItemsSourceChanged));
-        }
+        // we don't want to regenerate items if there is no itemssource and study context shouldn't change during study
+        //static AskForChoice()
+        //{
+        //    StudyContextProperty.OverrideMetadata(typeof(AskForChoice), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits, OnItemsSourceChanged));
+        //}
 
         protected override Task Execute(CancellationToken cancellationToken)
         {
-            RegenerateItems();
+            if (ItemsSource != null)
+                RegenerateItems();
 
             StudyContext.Log(this, this, "Prompt", Prompt);
-            StudyContext.Log(this, this, "ChoiceOrder", Items?.Select(i => i.DataIndex).Cast<object>().ToArray());
+            StudyContext.Log(this, this, "ChoiceIndexOrder", Items?.Select(i => i.DataIndex).Cast<object>().ToArray());
             StudyContext.Screen.Show(this);
             return Task.CompletedTask;
         }

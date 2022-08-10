@@ -32,7 +32,12 @@ namespace HurlbertVisionLab.XamlPsychHost
             
             string path = Prefix;
             if (!string.IsNullOrEmpty(Path))
-                path += "." + Path;
+            {
+                if (Path.StartsWith("["))
+                    path += Path;
+                else
+                    path += "." + Path;
+            }
 
             return new Binding(path) { RelativeSource = source }.ProvideValue(serviceProvider);
         }
