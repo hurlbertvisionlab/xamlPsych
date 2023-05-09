@@ -169,7 +169,7 @@
 
         <DataTemplate DataType="{x:Type psych:AskForTextInput}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Prompt}" />
+                <ContentPresenter Content="{Binding Prompt}" TextBlock.TextAlignment="Center" />
                 <StackPanel Margin="0,0.5cm">
                     <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Style="{StaticResource StudyInputControl}" />
                     <ItemsControl ItemsSource="{Binding ValidationErrors}" Foreground="Red" Focusable="False" />
@@ -180,7 +180,7 @@
 
         <DataTemplate DataType="{x:Type psych:AskForChoice}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Prompt}" />
+                <ContentPresenter Content="{Binding Prompt}" TextBlock.TextAlignment="Center" />
                 <StackPanel Margin="0,0.5cm">
                     <psych:SelectionBox ItemsSource="{Binding Items}" ItemTemplate="{Binding ItemTemplate}" ItemsPanel="{Binding Layout}" SelectedItem="{Binding Result, Mode=OneWayToSource}" ForceSelection="False" />
                 </StackPanel>
@@ -190,7 +190,7 @@
 
         <DataTemplate DataType="{x:Type psych:AskForRating}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding Prompt}" TextAlignment="Center" />
+                <ContentPresenter Content="{Binding Prompt}" TextBlock.TextAlignment="Center" />
                 <StackPanel Margin="0,0.5cm" Grid.IsSharedSizeScope="True">
                     <Grid VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
