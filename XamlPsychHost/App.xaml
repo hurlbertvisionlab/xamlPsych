@@ -153,6 +153,66 @@
             <Setter Property="Margin" Value="20" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         </Style>
+        
+        <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StudySlider" TargetType="Slider">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TickBar x:Name="TopTick" Fill="{DynamicResource ThemeForeground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
+                            <TickBar x:Name="BottomTick" Fill="{DynamicResource ThemeForeground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
+                            <Border x:Name="TrackBackground" Background="{DynamicResource ThemeForeground}" BorderThickness="1" Height="4.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center"/>
+
+                            <Track x:Name="PART_Track" Grid.Row="1">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Focusable="False" Height="18" VerticalAlignment="Center" Width="11" BorderBrush="{DynamicResource ThemeForeground}" BorderThickness="100"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="TickPlacement" Value="TopLeft">
+                                <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                                <Setter Property="Margin" TargetName="TrackBackground" Value="5,2,5,0"/>
+                            </Trigger>
+                            <Trigger Property="TickPlacement" Value="BottomRight">
+                                <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+                                <Setter Property="Margin" TargetName="TrackBackground" Value="5,0,5,2"/>
+                            </Trigger>
+                            <Trigger Property="TickPlacement" Value="Both">
+                                <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
+                                <Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="StudyInputControl" TargetType="Control">
             <Setter Property="Padding" Value="0.5cm"/>
@@ -200,7 +260,7 @@
                             <ColumnDefinition SharedSizeGroup="Label" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding MinimumText}" TextAlignment="Right" />
-                        <Slider Margin="0.5cm,0" Grid.Column="1" Name="PART_Slider" VerticalAlignment="Center" Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" IsMoveToPointEnabled="True" TickFrequency="{Binding Step}" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Value="{Binding Value}" Foreground="{DynamicResource ThemeForeground}">
+                        <Slider Margin="0.5cm,0" Grid.Column="1" Name="PART_Slider" VerticalAlignment="Center" Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" IsMoveToPointEnabled="True" TickFrequency="{Binding Step}" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Value="{Binding Value}" Style="{StaticResource StudySlider}">
                             <Slider.LayoutTransform>
                                 <ScaleTransform ScaleX="2" ScaleY="2" />
                             </Slider.LayoutTransform>
