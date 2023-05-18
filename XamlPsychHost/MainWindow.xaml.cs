@@ -55,6 +55,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                 if ("Dark".Equals(_currentStudy.Theme, StringComparison.OrdinalIgnoreCase))
                 {
                     Resources["ThemeBackground"] = new SolidColorBrush(Colors.Black);
+                    Resources["ThemeBackgroundInactive"] = new SolidColorBrush(Color.FromRgb(32, 32, 32));
                     Resources["ThemeForeground"] = new SolidColorBrush(Colors.White);
                 }
 
