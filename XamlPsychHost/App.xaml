@@ -171,7 +171,7 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ContentPresenter Content="{Binding Prompt}" TextBlock.TextAlignment="Center" />
                 <StackPanel Margin="0,0.5cm">
-                    <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Style="{StaticResource StudyInputControl}" />
+                    <TextBox Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Style="{StaticResource StudyInputControl}" />
                     <ItemsControl ItemsSource="{Binding ValidationErrors}" Foreground="Red" Focusable="False" />
                 </StackPanel>
                 <Button Content="{Binding ContinueText}" Click="{psych:Advance Continue}" HorizontalAlignment="Right" Style="{StaticResource StudyInputControl}" />
