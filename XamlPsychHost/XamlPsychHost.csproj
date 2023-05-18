@@ -138,6 +138,7 @@
     <Compile Include="StudyObjects\ILogInfo.cs" />
     <Compile Include="StudyObjects\DataSources\TokensSource.cs" />
     <Compile Include="StudyObjects\StudySteps\Flow\When.cs" />
+    <Compile Include="StudyObjects\StudySteps\Flow\Randomize.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\VibrateGamepad.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\HideCursor.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\ShowCursor.cs" />
