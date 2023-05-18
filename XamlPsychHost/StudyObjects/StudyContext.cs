@@ -106,7 +106,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             for (int i = 0; i < instances.Count; i++)
                 strings[i] = ToLogStringWithFallback(instances[i], fallbacks?[i]);
             
-            return string.Join(",", strings);
+            return string.Join(",", strings).Replace(Environment.NewLine, "  ").Replace("\r", "  ").Replace("\n", "  ");
         }
         public void Log(IXmlLineInfo lineInfo, object source, string @event, params object[] data)
         {
@@ -128,7 +128,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             else if (source is FrameworkElement el)
                 id = el.Name;
 
-            string logLine = string.Join(",", DateTimeOffset.Now.ToString("O"), UniqueID, StepNumber, line, col, name, id, @event, ToLogString(data).Replace(Environment.NewLine, "  "));
+            string logLine = string.Join(",", DateTimeOffset.Now.ToString("O"), UniqueID, StepNumber, line, col, name, id, @event, ToLogString(data));
             Debug.WriteLine(logLine);
 
             lock (_logThread)
