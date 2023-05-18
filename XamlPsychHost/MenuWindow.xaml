@@ -31,6 +31,11 @@
                 </DockPanel>
             </DataTemplate>
         </local:SelectionBox.Resources>
+        <local:SelectionBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem" BasedOn="{StaticResource SelectionBoxItem}">
+                <EventSetter Event="MouseDoubleClick" Handler="OnItemDoubleClick" />
+            </Style>
+        </local:SelectionBox.ItemContainerStyle>
         
         <ListBoxItem Name="_menuSave">Save data to flash drive</ListBoxItem>
         <ListBoxItem Name="_menuExit">Exit to system</ListBoxItem>

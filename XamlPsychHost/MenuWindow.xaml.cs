@@ -82,22 +82,7 @@ namespace HurlbertVisionLab.XamlPsychHost
         private void OnMenuKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
-                if (e.OriginalSource is ListBoxItem menu)
-            {
-
-                if (menu == _menuExit)
-                    Application.Current.Shutdown();
-
-                else if (menu == _menuSave)
-                    _ = Save();
-
-                else if (menu is ListBoxItem { Tag: string file })
-                {
-                    MainWindow study = new MainWindow();
-                    study.Show();
-                    _ = study.Load(file);
-                }
-            }
+                Execute(e.OriginalSource as ListBoxItem);
         }
 
         private bool _saving;
@@ -147,6 +132,28 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             _menu.Focus();
             _menu.MoveFocus(new TraversalRequest(FocusNavigationDirection.Down)); // select first element, focusing listboxitem does not seem to be working
+        }
+
+        private void OnItemDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Execute(sender as ListBoxItem);
+            e.Handled = true;
+        }
+
+        private void Execute(ListBoxItem menu)
+        {
+            if (menu == _menuExit)
+                Application.Current.Shutdown();
+
+            else if (menu == _menuSave)
+                _ = Save();
+
+            else if (menu is ListBoxItem { Tag: string file })
+            {
+                MainWindow study = new MainWindow();
+                study.Show();
+                _ = study.Load(file);
+            }
         }
     }
 }
