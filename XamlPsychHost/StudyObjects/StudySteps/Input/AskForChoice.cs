@@ -71,6 +71,22 @@ namespace HurlbertVisionLab.XamlPsychHost
         public static readonly DependencyProperty ItemsOrderProperty = DependencyProperty.Register(nameof(ItemsOrder), typeof(Order), typeof(AskForChoice), new PropertyMetadata(OnItemsOrderChanged));
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(nameof(ItemTemplate), typeof(DataTemplate), typeof(AskForChoice));
         public static readonly DependencyProperty LayoutProperty = DependencyProperty.Register(nameof(Layout), typeof(ItemsPanelTemplate), typeof(AskForChoice));
+        public static readonly DependencyProperty StartingIndexProperty = DependencyProperty.Register(nameof(StartingIndex), typeof(DefaultDouble), typeof(AskForChoice), new PropertyMetadata(DefaultDouble.Auto));
+
+        private static readonly DependencyPropertyKey StartingItemIndexPropertyKey = DependencyProperty.RegisterReadOnly(nameof(StartingItemIndex), typeof(int), typeof(AskForChoice), new PropertyMetadata(-1));
+        public static readonly DependencyProperty StartingItemIndexProperty = StartingItemIndexPropertyKey.DependencyProperty;
+
+        public int StartingItemIndex
+        {
+            get { return (int)GetValue(StartingItemIndexProperty); }
+            private set { SetValue(StartingItemIndexPropertyKey, value); }
+        }
+
+        public DefaultDouble StartingIndex
+        {
+            get { return (DefaultDouble)GetValue(StartingIndexProperty); }
+            set { SetValue(StartingIndexProperty, value); }
+        }
 
         [TypeConverter(typeof(LayoutConverter))]
         public ItemsPanelTemplate Layout
@@ -164,6 +180,53 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             if (ItemsSource != null)
                 RegenerateItems();
+
+            if (Items.Count > 0)
+                switch (StartingIndex.ValueType)
+                {
+                    case DefaultValueType.Auto:
+                        break;
+
+                    case DefaultValueType.Absolute:
+                        int index = (int)StartingIndex.Value;
+                        for (int i = 0; i < Items.Count; i++)
+                            if (Items[i].DataIndex == index)
+                                StartingItemIndex = i;
+                        break;
+
+                    case DefaultValueType.Default:
+                        break;
+
+                    case DefaultValueType.Minimum:
+                        int minIndex = 0;
+                        for (int i = 1; i < Items.Count; i++)
+                            if (Items[i].DataIndex < Items[minIndex].DataIndex)
+                                minIndex = i;
+
+                        StartingItemIndex = minIndex;
+                        break;
+
+                    case DefaultValueType.Maximum:
+                        int maxIndex = 0;
+                        for (int i = 1; i < Items.Count; i++)
+                            if (Items[i].DataIndex > Items[maxIndex].DataIndex)
+                                maxIndex = i;
+
+                        StartingItemIndex = maxIndex;
+                        break;
+
+                    case DefaultValueType.First:
+                        StartingItemIndex = 0;
+                        break;
+
+                    case DefaultValueType.Last:
+                        StartingItemIndex = Items.Count - 1;
+                        break;
+
+                    case DefaultValueType.Random:
+                        StartingItemIndex = StudyContext.Random.Next(Items.Count);
+                        break;
+                }
 
             StudyContext.Log(this, this, "Prompt", Prompt);
             StudyContext.Log(this, this, "ChoiceIndexOrder", Items?.Select(i => i.DataIndex).Cast<object>().ToArray());

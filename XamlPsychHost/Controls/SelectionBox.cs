@@ -11,13 +11,19 @@ namespace HurlbertVisionLab.XamlPsychHost
     public class SelectionBox : ListBox
     {
         public static readonly DependencyProperty ForceSelectionProperty = DependencyProperty.Register(nameof(ForceSelection), typeof(bool), typeof(SelectionBox));
+        public static readonly DependencyProperty StartingIndexProperty = DependencyProperty.Register(nameof(StartingIndex), typeof(int), typeof(SelectionBox), new PropertyMetadata(-1));
+
+        public int StartingIndex
+        {
+            get { return (int)GetValue(StartingIndexProperty); }
+            set { SetValue(StartingIndexProperty, value); }
+        }
 
         public bool ForceSelection
         {
             get { return (bool)GetValue(ForceSelectionProperty); }
             set { SetValue(ForceSelectionProperty, value); }
         }
-
 
         private static readonly Dictionary<string, Key> _inputToKey = new Dictionary<string, Key>(StringComparer.OrdinalIgnoreCase)
         {
@@ -60,9 +66,12 @@ namespace HurlbertVisionLab.XamlPsychHost
         {
             if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
             {
-                if (ForceSelection)
+                if (ForceSelection || StartingIndex >= 0)
                 {
-                    if (SelectedIndex < 0)
+                    if (StartingIndex >= 0)
+                        SelectedIndex = StartingIndex;
+                    
+                    else if (SelectedIndex < 0)
                         SelectedIndex = 0;
 
                     int selectedIndex = Math.Max(0, SelectedIndex);
