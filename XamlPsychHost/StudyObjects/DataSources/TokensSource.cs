@@ -3,6 +3,7 @@ using System.Windows.Markup;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {
+    [ContentProperty(nameof(Tokens))]
     public class TokensSource : StudyDataSource
     {
         public TokenStringCollection Tokens { get; set; } = new TokenStringCollection();

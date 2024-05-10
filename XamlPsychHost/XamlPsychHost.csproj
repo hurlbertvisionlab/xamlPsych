@@ -128,6 +128,7 @@
     <Compile Include="InputProviders\XInput\MapGamepad.cs" />
     <Compile Include="LineInfoXamlObjectWriter.cs" />
     <Compile Include="MarkupExtensions\AdvanceExtension.cs" />
+    <Compile Include="MarkupExtensions\TopUpToExtension.cs" />
     <Compile Include="MarkupExtensions\StudyObjectMarkupExtension.cs" />
     <Compile Include="MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
@@ -138,9 +139,11 @@
     <Compile Include="Shaders\DiagonalTransformEffect.cs" />
     <Compile Include="StudyException.cs" />
     <Compile Include="StudyObjects\DataItems\ImageItem.cs" />
+    <Compile Include="StudyObjects\DataItems\CombinedItem.cs" />
     <Compile Include="StudyObjects\DataSources\CombiningSource.cs" />
     <Compile Include="StudyObjects\DataSources\ImagesDirectorySource.cs" />
     <Compile Include="StudyObjects\DataSources\ObjectSource.cs" />
+    <Compile Include="StudyObjects\DataItems\PickedItem.cs" />
     <Compile Include="StudyObjects\DataSources\PickingSource.cs" />
     <Compile Include="StudyObjects\DataSources\RepeatingSource.cs" />
     <Compile Include="StudyObjects\DataSources\ResourceSource.cs" />

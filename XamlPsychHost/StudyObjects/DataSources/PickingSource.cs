@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -198,31 +197,6 @@ namespace HurlbertVisionLab.XamlPsychHost
             }
 
             return true;
-        }
-    }
-
-    public class PickedItem : IReadOnlyList<object>, ILogInfo
-    {
-        private readonly object[] _items;
-        private readonly int[] _indices;
-
-        public PickedItem(object[] items, int[] indices)
-        {
-            _items = items;
-            _indices = (int[])indices.Clone();
-        }
-
-        public object this[int index] => _items[index];
-        public int Count => _items.Length;
-
-        public int[] Indices => _indices;
-
-        public IEnumerator<object> GetEnumerator() => ((IEnumerable<object>)_items).GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => _items.GetEnumerator();
-
-        public string ToLogString(StudyContext context)
-        {
-            return context.ToLogStringWithFallback(_items, _indices);
         }
     }
 }

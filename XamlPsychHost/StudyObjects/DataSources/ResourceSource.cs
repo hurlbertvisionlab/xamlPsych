@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
-using System.Windows.Markup;
+﻿using System.Collections.Generic;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {

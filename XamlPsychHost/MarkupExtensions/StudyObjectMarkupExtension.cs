@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -22,6 +18,11 @@ namespace HurlbertVisionLab.XamlPsychHost
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
+            return CreateBinding(serviceProvider).ProvideValue(serviceProvider);
+        }
+
+        internal Binding CreateBinding(IServiceProvider serviceProvider)
+        {
             IProvideValueTarget target = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
 
             RelativeSource source;
@@ -31,7 +32,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                 source = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(StudyStep), 1);
             
             string path = Prefix;
-            if (!string.IsNullOrEmpty(Path))
+            if (!string.IsNullOrEmpty(Path) && !Path.StartsWith("#"))
             {
                 if (Path.StartsWith("["))
                     path += Path;
@@ -39,7 +40,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                     path += "." + Path;
             }
 
-            return new Binding(path) { RelativeSource = source }.ProvideValue(serviceProvider);
+            return new Binding(path) { RelativeSource = source };
         }
     }
 
