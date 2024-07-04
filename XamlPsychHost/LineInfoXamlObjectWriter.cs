@@ -3,9 +3,8 @@ using System.IO;
 using System.IO.Packaging;
 using System.Reflection;
 using System.Windows.Markup;
-using System.Windows.Navigation;
 using System.Xaml;
-using System.Xml;
+using UAM.InformatiX.Xaml;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {
@@ -71,7 +70,7 @@ namespace HurlbertVisionLab.XamlPsychHost
             {
                 IgnoreUidsOnPropertyElements = true,
                 BaseUri = parserContext.BaseUri ?? PackUriHelper.Create(new Uri("application://")), // BaseUriHelper.PackAppBaseUri;
-                ProvideLineInfo = true
+                ProvideLineInfo = true, 
             };
 
             XamlObjectWriterSettings writerSettings = new XamlObjectWriterSettings
@@ -80,12 +79,15 @@ namespace HurlbertVisionLab.XamlPsychHost
                 PreferUnconvertedDictionaryKeys = true,
             };
 
-            XamlXmlReader xamlReader = new XamlXmlReader(path, System.Windows.Markup.XamlReader.GetWpfSchemaContext(), readerSettings);
+            CustomXamlSchemaContext schemaContext = new CustomXamlSchemaContext(System.Windows.Markup.XamlReader.GetWpfSchemaContext());
+            schemaContext.Map(typeof(TupleItem), new TupleItemXamlType(schemaContext));
+
+            XamlXmlReader xamlReader = new XamlXmlReader(path, schemaContext, readerSettings);
 
             MethodInfo _Load = typeof(System.Windows.Markup.XamlReader).Assembly.GetType("System.Windows.Markup.WpfXamlLoader").GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic, null, new Type[]
             {
                     typeof(System.Xaml.XamlReader),   // xamlReader
-                    typeof(IXamlObjectWriterFactory), // wrtierFactory
+                    typeof(IXamlObjectWriterFactory), // writerFactory
                     typeof(bool),                     // skipJournaledProperties
                     typeof(object),                   // rootObject
                     typeof(XamlObjectWriterSettings), // settings

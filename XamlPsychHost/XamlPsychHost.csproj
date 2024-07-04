@@ -105,6 +105,9 @@
     <Compile Include="..\..\jan-external\UAM\Barycentric.cs">
       <Link>UAM\Barycentric.cs</Link>
     </Compile>
+    <Compile Include="..\..\jan-external\UAM\CustomXamlSchemaContext.cs">
+      <Link>UAM\CustomXamlSchemaContext.cs</Link>
+    </Compile>
     <Compile Include="..\..\jan-external\UAM\PowerManagement.cs">
       <Link>UAM\PowerManagement.cs</Link>
     </Compile>
@@ -140,6 +143,7 @@
     <Compile Include="StudyException.cs" />
     <Compile Include="StudyObjects\DataItems\ImageItem.cs" />
     <Compile Include="StudyObjects\DataItems\CombinedItem.cs" />
+    <Compile Include="StudyObjects\DataItems\TupleItem.cs" />
     <Compile Include="StudyObjects\DataSources\CombiningSource.cs" />
     <Compile Include="StudyObjects\DataSources\ImagesDirectorySource.cs" />
     <Compile Include="StudyObjects\DataSources\ObjectSource.cs" />
