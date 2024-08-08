@@ -190,6 +190,8 @@ namespace HurlbertVisionLab.XamlPsychHost
                 PrepareForNewExecution();
 
                 Task done = Execute(_timeoutCancellation.Token);
+                
+                _advanceTimerStarted = DateTimeOffset.Now;
                 List<Task> advances = new() { _timeoutTaskSource.Task, _inputTaskSource.Task, _resultTaskSource.Task, _explicitTaskSource.Task };
 
                 if (AdvanceWhenDone)
@@ -199,10 +201,7 @@ namespace HurlbertVisionLab.XamlPsychHost
 
                 if (!advance.IsCompleted)
                     if (AdvanceAfter != TimeSpan.Zero)
-                    {
-                        _advanceTimerStarted = DateTimeOffset.Now;
                         _advanceTimer.Start();
-                    }
 
                 Task winner = await advance;
                 if (winner.IsFaulted)
