@@ -46,8 +46,10 @@ namespace HurlbertVisionLab.XamlPsychHost
         }
 
         public int Count => _keys.Length;
-        public IEnumerable<string> Keys => _keys;
-        public IEnumerable<object> Values => _values;
+        public string[] Keys => _keys;
+        public object[] Values => _values;
+        IEnumerable<string> IReadOnlyDictionary<string, object>.Keys => _keys;
+        IEnumerable<object> IReadOnlyDictionary<string, object>.Values => _values;
 
         public bool ContainsKey(string key) => Array.IndexOf(_keys, key) >= 0;
         public bool TryGetValue(string key, out object value) => (value = this[key]) != null;
