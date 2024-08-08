@@ -162,6 +162,7 @@
     <Compile Include="StudyObjects\Study.cs" />
     <Compile Include="StudyObjects\StudyContext.cs" />
     <Compile Include="StudyObjects\StudySteps\Flow\Randomize.cs" />
+    <Compile Include="StudyObjects\StudySteps\Timers\TimeStep.cs" />
     <Compile Include="StudyObjects\StudySteps\Flow\When.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\Audio\Beep.cs" />
     <Compile Include="StudyObjects\StudySteps\Hardware\Audio\Speak.cs" />
