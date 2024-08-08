@@ -12,7 +12,7 @@ using System.Xaml.Schema;
 
 namespace HurlbertVisionLab.XamlPsychHost
 {
-    public class TupleItem : DynamicObject
+    public class TupleItem : DynamicObject, ILogInfo
     {
         internal static HashSet<string> AllKeys = new();
 
@@ -44,6 +44,16 @@ namespace HurlbertVisionLab.XamlPsychHost
                 return null;
             }
             set { _values[name] = value; }
+        }
+
+        public override string ToString()
+        {
+            return string.Join(",", _values.Select(p => p.Key + "=" + p.Value));
+        }
+
+        public string ToLogString(StudyContext context)
+        {
+            return ToString();
         }
     }
 
