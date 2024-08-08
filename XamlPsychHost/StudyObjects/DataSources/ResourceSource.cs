@@ -37,7 +37,7 @@ namespace HurlbertVisionLab.XamlPsychHost
                         return null;
                 }
                 else
-                    return itemsCount++;
+                    itemsCount++;
 
             return itemsCount;
         }
