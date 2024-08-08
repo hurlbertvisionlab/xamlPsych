@@ -144,10 +144,11 @@
     <Compile Include="StudyObjects\DataItems\ImageItem.cs" />
     <Compile Include="StudyObjects\DataItems\CombinedItem.cs" />
     <Compile Include="StudyObjects\DataItems\TupleItem.cs" />
+    <Compile Include="StudyObjects\DataItems\PickedItem.cs" />
     <Compile Include="StudyObjects\DataSources\CombiningSource.cs" />
     <Compile Include="StudyObjects\DataSources\ImagesDirectorySource.cs" />
+    <Compile Include="StudyObjects\DataSources\FilteringSource.cs" />
     <Compile Include="StudyObjects\DataSources\ObjectSource.cs" />
-    <Compile Include="StudyObjects\DataItems\PickedItem.cs" />
     <Compile Include="StudyObjects\DataSources\PickingSource.cs" />
     <Compile Include="StudyObjects\DataSources\RepeatingSource.cs" />
     <Compile Include="StudyObjects\DataSources\ResourceSource.cs" />
